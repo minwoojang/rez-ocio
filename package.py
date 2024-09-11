@@ -1,27 +1,23 @@
 name = "ocio"
 
-version = "2.2.1"
+version = "2.3.2"
 
 variants = [
-    ["platform-linux", "python-3.7"],
     ["platform-linux", "python-3.9"],
     ["platform-linux", "python-3.10"],
     ["platform-linux", "python-3.11"],
 ]
 
-@early()
-def build_requires():
-    # check if the system gcc is too old <9
-    # then we require devtoolset-9
-    requirements = ["cmake-3.15+<4"]
-    from subprocess import check_output
-    gcc_major = int(check_output(r"gcc -dumpversion | cut -f1 -d.", shell=True).strip().decode())
-    if gcc_major < 6:
-        requirements.append("devtoolset-9")
-
-    return requirements
+private_build_requires = [
+    "cmake-3.15+<4",
+    "gcctoolset-9"
+]
 
 build_command = "make -f {root}/Makefile {install}"
+
+def pre_build_commands():
+    env.Python_ROOT = env.PYTHON_ROOT
+    unsetenv("PYTHON_ROOT")
 
 def commands():
     env.OCIO_ROOT = '{root}'
@@ -33,3 +29,16 @@ def commands():
 
     if building:
         env.OpenColorIO_ROOT="{root}" # CMake Hint
+
+tests = {
+    "python": {
+        "command": """
+        python -c "import PyOpenColorIO as ocio; assert ocio.__version__ == '{version}'"
+        """,
+        "run_on": [
+            "pre_install",
+            "pre_release",
+        ],
+        "on_variants": True
+    },
+}
