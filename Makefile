@@ -2,11 +2,11 @@ SHELL := /bin/bash
 
 # Rez variables, setting these to sensible values if we are not building from rez
 REZ_BUILD_PROJECT_VERSION ?= NOT_SET
-REZ_BUILD_INSTALL_PATH ?= /usr/local
+REZ_BUILD_INSTALL_PATH ?= /home/minwoo/packages/ocio
 REZ_BUILD_SOURCE_PATH ?= $(shell dirname $(lastword $(abspath $(MAKEFILE_LIST))))
 BUILD_ROOT := $(REZ_BUILD_SOURCE_PATH)/build
 REZ_BUILD_PATH ?= $(BUILD_ROOT)
-REZ_PYTHON_VERSION ?= 3
+REZ_PYTHON_VERSION ?= 3.7.7
 
 # Build time locations
 SOURCE_DIR := $(BUILD_ROOT)/OpenColorIO/
