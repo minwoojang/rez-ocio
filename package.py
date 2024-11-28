@@ -3,13 +3,14 @@ name = "ocio"
 version = "2.3.2"
 
 variants = [
-    ["platform-linux", "arch-x86_64", "python-3.7.7"],
-    # ["platform-linux", "arch-x86_64", "python-3.9"],
+    # ["platform-linux", "arch-x86_64", "python-3.7.7"],
+    ["platform-linux", "arch-x86_64", "python-3.9.16"],
     # ["platform-linux", "python-3.11"],
 ]
 
 private_build_requires = [
-    # "cmake-3.15+<4",
+     "cmake-3",
+     "gcc-6"
     # "gcctoolset-9"
 ]
 
